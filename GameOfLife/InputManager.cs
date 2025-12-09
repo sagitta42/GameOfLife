@@ -13,15 +13,28 @@ namespace GameOfLife
         private static char grid_char = 'x';
         private static char coord_char = ',';
         private static char run_char = 'R';
+        private static char replace_char = '@';
+        private static char yes = 'Y';
+        private static char no = 'N';
 
-        private static string message_intro_world = "Enter world size in format NxM: ";
-        private static string message_intro_config = "Enter coordinates of cell to toggle in X,Y format; enter ? if ready to run: ";
+        private static string message_intro_world = "Enter world size in format N@M";
+        private static string message_intro_coord = "Enter coordinates of cell to toggle in X@Y format";
+        private static string message_intro_run = "enter @ if ready to run";
+        private static string message_play_again = "Want to play again?";
 
-        private static string error_format_separator = "Please use N?M format (example: 5?5): ";
-        private static string error_format_number = "Please use integers for N and M (N?M): ";
         private static string error_out_of_grid = "Coordinate out of grid!";
+        private static string error_format_separator = "Please use N@M format (example: 5@5)";
+        private static string error_format_number = "Please use integers for N and M (N@M)";
 
-        public InputManager(ConsoleManager consoleOutput) { console_manager = consoleOutput; }
+        public InputManager(ConsoleManager consoleOutput) {
+            console_manager = consoleOutput;
+
+            message_intro_world = message_intro_world.Replace(replace_char, grid_char);
+            message_intro_coord = message_intro_coord.Replace(replace_char, coord_char);
+            message_intro_run = message_intro_run.Replace(replace_char, run_char);
+
+            message_play_again = message_play_again + $" [{yes}/{no}]";
+        }
         
         public (int, int) GetWorldSize()
         {
@@ -30,11 +43,12 @@ namespace GameOfLife
         }
         public void SetInitLiveCells(World world)
         {
+            string message_intro_config = $"{message_intro_coord}; {message_intro_run}";
             bool run_flag = false;
             (int, int) coord;
             while (!run_flag)
             {
-                coord = GetCoordinatesFromInput(message_intro_config.Replace('?', run_char), coord_char);
+                coord = GetCoordinatesFromInput(message_intro_config, coord_char);
                 if(coord.Item1 == -1)
                 {
                     run_flag = true;
@@ -54,14 +68,24 @@ namespace GameOfLife
                 }
             }
         }
-        public (int, int) GetCoordinatesFromInput(string message, char separator)
+
+        public bool PlayAgain()
         {
-            console_manager.Write(message.Replace('?', separator));
-            string user_input = console_manager.ReadLine();
+            string user_input = console_manager.ReadInput(message_play_again);
+            if (user_input == $"{yes}"){ return true; }
+            else if (user_input == $"{no}") { return false; }
+            else { return PlayAgain(); }
+        }
+
+        private (int, int) GetCoordinatesFromInput(string message, char separator)
+        {
+            string user_input = console_manager.ReadInput(message.Replace(replace_char, separator));
 
             if (user_input == $"{run_char}") { return (-1, -1); }
 
-            if (!user_input.Contains(separator)) { return GetCoordinatesFromInput(error_format_separator, separator); }
+            if (!user_input.Contains(separator)) {
+                return GetCoordinatesFromInput(error_format_separator.Replace(replace_char, separator), separator);
+            }
 
             string[] parts = user_input.Split(separator);
             int[] ret = new int[2];
@@ -74,7 +98,7 @@ namespace GameOfLife
                 }
                 else
                 {
-                    return GetCoordinatesFromInput(error_format_number, separator);
+                    return GetCoordinatesFromInput(error_format_number.Replace(replace_char, separator), separator);
                 }
             }
             return (ret[0], ret[1]);

@@ -11,25 +11,22 @@ namespace GameOfLife
         private int n_world_rows;
         private int n_lines_skip = 0;
 
-        public void Write(string message)
-        {
-            Console.Write(message);
-        }
-
-        public void WriteLine(string message = "")
+        public void WriteLine(string message = "", int sleep_time = 0)
         {
             Console.WriteLine(message);
             n_lines_skip++;
+            System.Threading.Thread.Sleep(sleep_time);
         }
 
-        public string ReadLine()
+        public string ReadInput(string message)
         {
+            Console.Write(message + ": ");
             string user_input = Console.ReadLine();
             n_lines_skip++;
             return user_input;
         }
 
-        public void Show(World world, int cycle_time = 0, bool overwrite = false)
+        public void Show(World world, int sleep_time = 0, bool overwrite = false)
         {
             if (overwrite) {
                 Console.SetCursorPosition(0, Console.CursorTop - n_world_rows - n_lines_skip);
@@ -47,7 +44,7 @@ namespace GameOfLife
             {
                 n_lines_skip = 0;
             }
-            System.Threading.Thread.Sleep(cycle_time);
+            System.Threading.Thread.Sleep(sleep_time);
         }
 
         private string[] GetWorldRows(World world)

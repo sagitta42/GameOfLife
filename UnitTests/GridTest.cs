@@ -20,7 +20,7 @@ namespace GameOfLife.Tests
                 for (int j = 0; j < world.height; j++)
                 {
                     world.ToggleCell(i, j);
-                    console_manager.Show(world, cycle_time: cycle_time);
+                    console_manager.Show(world, sleep_time: cycle_time);
                 }
             }
         }
