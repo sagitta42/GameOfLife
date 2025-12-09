@@ -8,8 +8,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: microsoft/setup-msbuild@v2
-      - run: nuget restore GameOfLife.sln
-      - run: msbuild GameOfLife.sln /p:Configuration=Release
-      - run: |
-          vstest.console.exe UnitTests\bin\Release\**\UnitTests.dll
+      - uses: actions/setup-dotnet@v4
+      - run: dotnet restore GameOfLife.sln
+      - run: dotnet build GameOfLife.sln --configuration Release --no-restore
+      - run: dotnet test GameOfLife.sln --configuration Release --no-build
