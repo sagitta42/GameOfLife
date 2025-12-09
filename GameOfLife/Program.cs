@@ -10,20 +10,36 @@ namespace GameOfLife
     {
         static void Main(string[] args)
         {
-            World world = new World(3,3);
+            ConsoleManager console_manager = new ConsoleManager();
 
-            world.Toggle(0, 1);
-            world.Toggle(1, 1);
-            world.Toggle(2, 1);
+            InputManager input_manager = new InputManager(console_manager);
+
+            (int, int) size = input_manager.GetWorldSize();
+            World world = new World(size);
+            console_manager.Show(world);
+            
+            input_manager.SetInitLiveCells(world);
 
             int cycle_time = 1500;
-            int n_cycles = 12;
-
-            for (int i = 0; i < n_cycles; i++)
+            console_manager.Show(world, cycle_time: cycle_time);
+            bool run_flag = true;
+            while(run_flag)
             {
-                world.Show();
                 world.Cycle();
-                System.Threading.Thread.Sleep(cycle_time);
+                console_manager.Show(world, cycle_time: cycle_time, overwrite: true);
+
+                // TODO: #17 detect oscillator and stop program
+                if (world.is_stable)
+                {
+                    console_manager.WriteLine("STABLE");
+                    run_flag = false;
+                }
+                if (!world.is_populated)
+                {
+                    console_manager.WriteLine("THE END");
+                    run_flag = false;
+                }
+
             }
         }
     }

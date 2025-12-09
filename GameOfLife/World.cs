@@ -12,18 +12,20 @@ namespace GameOfLife
         public int height;
 
         private Cell[,] grid;
-        private int n_visual_rows;
+
+        public bool is_populated;
+        public bool is_stable;
 
         public World(int length, int height)
         {
             this.length = length;
             this.height = height;
 
-            this.n_visual_rows = height + 2;
-
             InitGrid();
             LinkNeighbors();
         }
+
+        public World((int, int) size): this(size.Item1, size.Item2) { }
 
         private void InitGrid()
         {
@@ -39,6 +41,7 @@ namespace GameOfLife
 
         private void LinkNeighbors()
         {
+            // TODO: #9 improve algorithm
             int counter_progress = 0;
             int n_total = length * height;
             for (int i = 0; i < length; i++)
@@ -67,12 +70,25 @@ namespace GameOfLife
             return ret;
         }
         
-        public void Toggle(int i, int j){ this.grid[i, j].Toggle(); }
+        public bool IsInGrid((int, int) coord)
+        {
+            return IsInGrid(coord.Item1, coord.Item2);
+        }
 
+        public Cell GetCell(int i, int j)
+        {
+            return IsInGrid(i, j) ? grid[i, j] : null;
+        }
+
+        public void ToggleCell(int i, int j){ this.grid[i, j].Toggle(); }
+
+        public void ToggleCell((int, int) coord) { this.ToggleCell(coord.Item1, coord.Item2); }
         public void Cycle()
         {
             bool[,] future_grid = new bool[length, height];
-
+            is_populated = false;
+            is_stable = true;
+            // TODO: #4 optimize by scanning only relevant cells instead of all
             for (int i = 0; i < length; i++)
             {
                 for (int j = 0; j < height; j++)
@@ -85,48 +101,11 @@ namespace GameOfLife
             {
                 for (int j = 0; j < height; j++)
                 {
+                    is_populated = is_populated || future_grid[i, j];
+                    is_stable = is_stable && future_grid[i, j] == grid[i, j].IsAlive();
                     grid[i, j].SetStatus(future_grid[i, j]);
                 }
             }
-        }
-
-        private string[] GetVisualRows()
-        {
-            string[] arr = new string[n_visual_rows];
-            string frame = new string('-', length);
-            frame = ' ' + frame + ' ';
-            arr[0] = frame;
-            arr[n_visual_rows - 1] = frame;
-
-            for (int i = 1; i < n_visual_rows - 1; i++)
-            {
-                string row = "";
-                for (int j = 0; j < length; j++)
-                {
-                    row += this.grid[i-1, j].Show();
-                }
-                row = '|' + row + '|';
-                arr[i] = row;
-            }
-
-            return arr;
-        }
-
-        private string GetVisualGrid()
-        {
-            string ret = "";
-            string[] rows = GetVisualRows();
-            foreach (string row in rows)
-            {
-                ret += row + '\n';
-            }
-            return ret;
-        }
-
-        public void Show(bool overwrite = true)
-        {
-            Console.Write(GetVisualGrid());
-            if (overwrite) { Console.SetCursorPosition(0, Console.CursorTop - n_visual_rows); }
         }
     }
 }

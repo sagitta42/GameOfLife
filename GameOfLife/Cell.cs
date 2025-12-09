@@ -20,8 +20,10 @@ namespace GameOfLife
 
         public bool IsAlive() {  return is_alive; }
         public void Toggle() { is_alive = !is_alive; }
-
-        public void SetStatus(bool status) {  is_alive = status; }
+        public void SetStatus(bool status) {
+            // TODO: #14 increment/decrement live neighbor counter for neighbor cells
+            is_alive = status;
+        }
         public void AddNeighbor(Cell cell) {
             neighbors[n_neighbors] = cell;
             n_neighbors++;
@@ -37,7 +39,6 @@ namespace GameOfLife
             return n_live_neighbors == 3;
 
         }
-
         private int GetNLiveNeighbors()
         {
             int n_live = 0;
@@ -46,11 +47,6 @@ namespace GameOfLife
             }
 
             return n_live;
-        }
-        public string Show()
-        {
-            string ret = is_alive ? "o" : " ";
-            return ret;
         }
     }
 }
