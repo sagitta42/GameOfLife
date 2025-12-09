@@ -9,6 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
-      - run: dotnet restore GameOfLife.sln
-      - run: dotnet build GameOfLife.sln --configuration Release --no-restore
+      - run: nuget restore GameOfLife.sln
+      - run: msbuild GameOfLife.sln /p:Configuration=Release
       - run: dotnet test GameOfLife.sln --configuration Release --no-build
