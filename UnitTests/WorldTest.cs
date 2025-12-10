@@ -5,22 +5,18 @@ using GameOfLife;
 namespace GameOfLife.Tests
 {
     [TestClass]
-    public class GridTest
+    public class WorldTest
     {
         [TestMethod]
-        public void BasicTest()
+        public void GridTest()
         {
-            ConsoleManager console_manager = new ConsoleManager();
-
             World world = new World(3, 3);
-            int cycle_time = 800;
 
             for (int i = 0; i < world.length; i++)
             {
                 for (int j = 0; j < world.height; j++)
                 {
-                    world.ToggleCell(i, j);
-                    console_manager.Show(world, sleep_time: cycle_time);
+                    Assert.IsTrue(world.GetCell(i, j) != null);
                 }
             }
         }
