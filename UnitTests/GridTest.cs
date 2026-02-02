@@ -7,6 +7,8 @@ namespace UnitTests
         [Fact]
         public void BasicTest()
         {
+            ConsoleManager console_manager = new ConsoleManager();
+
             World world = new World(3, 3);
             int cycle_time = 800;
 
@@ -14,9 +16,8 @@ namespace UnitTests
             {
                 for (int j = 0; j < world.height; j++)
                 {
-                    world.Toggle(i, j);
-                    world.Show(overwrite: false);
-                    System.Threading.Thread.Sleep(cycle_time);
+                    world.ToggleCell(i, j);
+                    console_manager.Show(world, cycle_time: cycle_time);
                 }
             }
         }

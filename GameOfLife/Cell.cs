@@ -22,6 +22,7 @@ namespace GameOfLife
         public bool IsAlive() { return is_alive; }
         public void Toggle() { is_alive = !is_alive; }
 
+        // TODO: #5 optimize: increment/decrement live neighbor counter for neighbor cells while setting status of current cell
         public void SetStatus(bool status) { is_alive = status; }
         public void AddNeighbor(Cell cell)
         {
@@ -49,11 +50,6 @@ namespace GameOfLife
             }
 
             return n_live;
-        }
-        public string Show()
-        {
-            string ret = is_alive ? "o" : " ";
-            return ret;
         }
     }
 }
