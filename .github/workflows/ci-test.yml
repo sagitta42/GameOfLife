@@ -1,0 +1,13 @@
+name: basic-test
+on:
+  pull_request:
+    branches:
+     - main
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+      - run: dotnet build GameOfLife.sln --configuration Release --no-restore
+      - run: dotnet test GameOfLife.sln --configuration Release --no-build
