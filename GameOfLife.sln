@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "Integra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLogic", "GameLogic\GameLogic.csproj", "{4A51536D-91BA-488A-97AF-D32081FD88C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{191C752D-2D5E-430E-94A6-1678BF719569}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4A51536D-91BA-488A-97AF-D32081FD88C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A51536D-91BA-488A-97AF-D32081FD88C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A51536D-91BA-488A-97AF-D32081FD88C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191C752D-2D5E-430E-94A6-1678BF719569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191C752D-2D5E-430E-94A6-1678BF719569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191C752D-2D5E-430E-94A6-1678BF719569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191C752D-2D5E-430E-94A6-1678BF719569}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
