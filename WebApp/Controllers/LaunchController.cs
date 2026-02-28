@@ -21,6 +21,7 @@ namespace WebApp.Controllers
             World? world = GetWorld();
             if (world == null) { return RedirectToAction("Index", "Home"); }
             ShowWorld(world);
+            ViewBag.status = "start";
             return View();
         }
 
@@ -48,10 +49,12 @@ namespace WebApp.Controllers
             if (world.is_stable)
             {
                 ViewBag.Message = ViewBag.Message + "\n" + "STABLE";
+                ViewBag.status = "end";
             }
             if (!world.is_populated)
             {
                 ViewBag.Message = ViewBag.Message + "\n" + "THE END";
+                ViewBag.status = "end";
             }
 
             return View("Index");
