@@ -4,6 +4,7 @@ using WebApp.Models;
 
 using GameLogic;
 using GameAdapter;
+using Utils;
 
 namespace WebApp.Controllers
 {
@@ -18,6 +19,10 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            string[] header_lines = Utils.Utils.GetHeaderLines();
+            string header = "";
+            foreach (string line in header_lines) { header += "\n" + line; }
+            ViewBag.header = header;
             return View();
         }
 

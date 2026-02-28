@@ -3,8 +3,6 @@
 }
 
 <div class="text-center">
-    <h1>Game Of Life</h1>
-
     <h2>Enter cell coordinates:</h2>
 
     <form method="post" asp-action="ToggleCell">
@@ -17,9 +15,10 @@
         </div>
     </form>
 
-    @* FIXME: #20 buttons touching *@
     <form method="post" asp-action="RunGame">
-        <button type="submit" class="btn btn-primary btn-lg">Run</button>
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary btn-lg">Run</button>
+        </div>
     </form>    
 
     @if (ViewBag.Message != null)

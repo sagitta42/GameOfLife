@@ -2,9 +2,11 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1>Game Of Life</h1>
+<div class="text-center mb-3">
+    <pre class="game-console-header">@ViewBag.header</pre>
+</div>
 
+<div class="text-center">
     <h2>Enter world size:</h2>
 
     <form method="post" asp-action="CreateWorld">

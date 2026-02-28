@@ -8,6 +8,7 @@ using System.Reflection;
 
 using GameLogic;
 using GameFlow;
+using Utils;
 
 namespace ConsoleApp
 {
@@ -37,26 +38,11 @@ namespace ConsoleApp
 
         private static void ShowHeader(ConsoleManager console_manager)
         {
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
-            string v = $"v{version.Major}.{version.Minor}.{version.MinorRevision}";
-            string header = "|o GameOfLife " + v + " o|";
-
-            string frame = new string('-', header.Length - 2);
-            frame = " " + frame + " ";
-            string subframe = "";
-            string cell;
-            for (int i = 0; i < header.Length - 2; i++)
+            string[] header_lines = Utils.Utils.GetHeaderLines();
+            foreach(string line in header_lines)
             {
-                cell = i % 2 == 0 ? " " : "o";
-                subframe = subframe + cell;
+                console_manager.WriteLine(line);
             }
-            subframe = "|" + subframe + "|";
-
-            console_manager.WriteLine(frame);
-            console_manager.WriteLine(subframe);
-            console_manager.WriteLine(header);
-            console_manager.WriteLine(subframe);
-            console_manager.WriteLine(frame);
         }
     }
 }
