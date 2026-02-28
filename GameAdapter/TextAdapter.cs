@@ -8,9 +8,10 @@ namespace GameAdapter
         {
             string[] rows = GetWorldRows(world);
             string ret = "";
-            foreach (string row in rows)
+            for(int i = 0; i < rows.Length; i ++)
             {
-                ret = ret + row + break_char;
+                ret = ret + rows[i];
+                if(i < rows.Length - 1) { ret = ret + break_char; }
             }
             return ret;
         }
@@ -31,7 +32,7 @@ namespace GameAdapter
                 string row = "";
                 for (int i = 0; i < world.length; i++)
                 {
-                    row += CellRepr(world.GetCell(i, j - 1));
+                    row += GetCellRepr(world.GetCell(i, j - 1));
                 }
                 row = '|' + row + '|';
                 arr[j] = row;
@@ -42,15 +43,32 @@ namespace GameAdapter
 
         public static World GetWorldFromString(string world_repr)
         {
-            // TODO: #19 implement toggling cells based on received world representation
-            string[] rows = world_repr.Split("\n");
-            int n_rows = rows.Length;
-            int n_columns = rows[0].Length;
-            World ret = new World(n_columns, n_rows);
+            string[] rows_text = world_repr.Split("\n");
+
+            int world_height = rows_text.Length - 2;
+            int world_length = rows_text[0].Length - 2;
+            World world = new World(world_length, world_height);
+
+            for (int j = 1; j < rows_text.Length - 1; j++)
+            {
+                string row = rows_text[j];
+                for (int i = 1; i < row.Length - 1; i++)
+                {
+                    bool cell_alive = GetCellStatus(row[i]);
+                    if (cell_alive) { world.ToggleCell(i - 1, j - 1); }
+                }
+            }
+            return world;
+        }
+
+        private static bool GetCellStatus(char cell_repr)
+        {
+            // TODO: move repr to class member
+            bool ret = cell_repr == 'o';
             return ret;
         }
 
-        private static string CellRepr(Cell cell)
+        private static string GetCellRepr(Cell cell)
         {
             string ret = cell.IsAlive() ? "o" : " ";
             return ret;

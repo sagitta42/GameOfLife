@@ -44,8 +44,11 @@ namespace WebApp.Controllers
             World world = TextAdapter.GetWorldFromString(world_repr);
             world.ToggleCell(x, y);
 
+            // TODO: helper method to do this procedure for either controller
             string world_text = TextAdapter.GetWorldString(world);
+            HttpContext.Session.SetString("world", world_text);
             ViewBag.Message = $"\n{world_text}";
+
             return View("Index");
         }
     }
