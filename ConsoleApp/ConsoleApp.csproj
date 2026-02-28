@@ -13,6 +13,7 @@
 
 <ItemGroup>
   <ProjectReference Include="..\GameAdapter\GameAdapter.csproj" />
+  <ProjectReference Include="..\GameFlow\GameFlow.csproj" />
   <ProjectReference Include="..\GameLogic\GameLogic.csproj" />
 </ItemGroup>
 

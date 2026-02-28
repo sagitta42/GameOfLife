@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 using GameLogic;
 using GameAdapter;
+using GameFlow;
 
 namespace ConsoleApp
 {
-    public class ConsoleManager
+    public class ConsoleManager : IGameInterface
     {
         private int n_lines_skip = 0;
 
@@ -50,6 +51,11 @@ namespace ConsoleApp
                 n_lines_skip = 0;
             }
             System.Threading.Thread.Sleep(sleep_time);
+        }
+
+        public void Info(string message = "", int sleep_time = 0)
+        {
+            WriteLine(message, sleep_time);
         }
     }
 }
