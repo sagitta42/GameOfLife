@@ -12,6 +12,7 @@
 </PropertyGroup>
 
 <ItemGroup>
+  <ProjectReference Include="..\GameAdapter\GameAdapter.csproj" />
   <ProjectReference Include="..\GameLogic\GameLogic.csproj" />
 </ItemGroup>
 

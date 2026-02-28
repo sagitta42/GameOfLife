@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLogic", "GameLogic\Game
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{191C752D-2D5E-430E-94A6-1678BF719569}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameAdapter", "GameAdapter\GameAdapter.csproj", "{835F1747-AEB1-4B32-B141-7BA5981F7095}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{191C752D-2D5E-430E-94A6-1678BF719569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{191C752D-2D5E-430E-94A6-1678BF719569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{191C752D-2D5E-430E-94A6-1678BF719569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{835F1747-AEB1-4B32-B141-7BA5981F7095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{835F1747-AEB1-4B32-B141-7BA5981F7095}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{835F1747-AEB1-4B32-B141-7BA5981F7095}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{835F1747-AEB1-4B32-B141-7BA5981F7095}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
