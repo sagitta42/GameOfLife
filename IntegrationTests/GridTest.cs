@@ -1,6 +1,7 @@
+using GameLogic;
 using ConsoleApp;
 
-namespace UnitTests
+namespace IntegrationTests
 {
     public class GridTest
     {
