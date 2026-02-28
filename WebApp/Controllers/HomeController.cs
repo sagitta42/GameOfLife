@@ -30,10 +30,9 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult LaunchGame()
+        public IActionResult LaunchGame(int width, int height)
         {
-            // FIXME: #17 implement simplest possible action for proper test
-            ViewBag.Message = "Game Launched!";
+            ViewBag.Message = $"{width} x {height}";
             return View("Index");
         }        
     }

@@ -5,8 +5,16 @@
 <div class="text-center">
     <h1>Game Of Life</h1>
 
+    <h2>Enter world size:</h2>
+
     <form method="post" asp-action="LaunchGame">
-        <button type="submit" class="btn btn-primary btn-lg">Launch game</button>
+        <input type="number" name="Width" class="form-control d-inline-block" style="width: 85px;" placeholder="Width" required />
+        <span class="mx-2">x</span>
+        <input type="number" name="Height" class="form-control d-inline-block" style="width: 85px;" placeholder="Height" required />
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary btn-lg">Launch game</button>
+        </div>
     </form>
 
     @if (ViewBag.Message != null)
