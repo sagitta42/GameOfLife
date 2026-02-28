@@ -33,7 +33,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult LaunchGame(int width, int height)
+        public IActionResult CreateWorld(int width, int height)
         {
             World world = new World(width, height);
             string world_text = TextAdapter.GetWorldString(world);
