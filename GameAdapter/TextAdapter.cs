@@ -4,6 +4,17 @@ namespace GameAdapter
 {
     public static class TextAdapter
     {
+        public static string GetWorldString(World world, string break_char = "\n")
+        {
+            string[] rows = GetWorldRows(world);
+            string ret = "";
+            foreach (string row in rows)
+            {
+                ret = ret + row + break_char;
+            }
+            return ret;
+        }
+
         public static string[] GetWorldRows(World world)
         {
             int n_world_rows;

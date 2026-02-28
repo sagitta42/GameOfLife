@@ -2,6 +2,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
+using GameLogic;
+using GameAdapter;
+
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
@@ -32,7 +35,10 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult LaunchGame(int width, int height)
         {
-            ViewBag.Message = $"{width} x {height}";
+            World world = new World(width, height);
+            string world_text = TextAdapter.GetWorldString(world);
+            // NOTE: #18 quickfix adding newline because otherwise top frame gets shifted by multiple spaces
+            ViewBag.Message = $"\n{world_text}";
             return View("Index");
         }        
     }
