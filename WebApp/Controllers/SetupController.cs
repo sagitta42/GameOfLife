@@ -38,8 +38,14 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult ToggleCell(int x, int y)
         {
-            // TODO: #19 implement cell toggling
-            ViewBag.Message = $"({x}, {y})";
+            string? world_repr = HttpContext.Session.GetString("world");
+            if (world_repr == null) return RedirectToAction("Index", "Setup");
+
+            World world = TextAdapter.GetWorldFromString(world_repr);
+            world.ToggleCell(x, y);
+
+            string world_text = TextAdapter.GetWorldString(world);
+            ViewBag.Message = $"\n{world_text}";
             return View("Index");
         }
     }
