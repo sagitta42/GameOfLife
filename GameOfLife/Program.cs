@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using System.Reflection;
 
+using GameLogic;
+
 namespace GameOfLife
 {
     internal class Program
