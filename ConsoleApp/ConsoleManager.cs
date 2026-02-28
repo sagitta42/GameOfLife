@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using GameLogic;
 
-namespace GameOfLife
+namespace ConsoleApp
 {
     public class ConsoleManager
     {

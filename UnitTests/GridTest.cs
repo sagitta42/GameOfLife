@@ -1,4 +1,4 @@
-using GameOfLife;
+using ConsoleApp;
 
 namespace UnitTests
 {

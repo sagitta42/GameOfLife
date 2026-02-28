@@ -8,7 +8,7 @@ using System.Reflection;
 
 using GameLogic;
 
-namespace GameOfLife
+namespace ConsoleApp
 {
     internal class Program
     {
