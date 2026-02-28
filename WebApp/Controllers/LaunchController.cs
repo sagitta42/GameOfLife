@@ -1,25 +1,25 @@
 ﻿using System.Diagnostics;
+using GameAdapter;
+using GameLogic;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
-using GameLogic;
-using GameAdapter;
-
 namespace WebApp.Controllers
 {
-    public class SetupController : Controller
+    public class LaunchController : Controller
     {
         private readonly ILogger<SetupController> _logger;
 
-        public SetupController(ILogger<SetupController> logger)
+        public LaunchController(ILogger<SetupController> logger)
         {
             _logger = logger;
         }
 
         public IActionResult Index()
         {
+            // TODO: #20 can recycle? controller inheritance?.. interface?
             World? world = GetWorld();
-            if(world == null) { return RedirectToAction("Index", "Home"); }
+            if (world == null) { return RedirectToAction("Index", "Home"); }
             ShowWorld(world);
             return View();
         }
@@ -31,21 +31,30 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult ToggleCell(int x, int y)
+        public IActionResult RunCycle()
         {
+            // TODO: #20 runs single cycle at each click - implement auto-polling
+
+            // FIXME: #20 figure out if possible to manage to use Game Flow without needing to replicate steps here
+            // (difficulty - ViewBag update each cycle)
+            //Run.RunGame(world, _gameInterface);
+
             World? world = GetWorld();
             if (world == null) { return RedirectToAction("Index", "Home"); }
 
-            world.ToggleCell(x, y);
+            world.Cycle();
             ShowWorld(world);
-            return View("Index");
-        }
 
-        [HttpPost]
-        public IActionResult RunGame()
-        {
-            // proceed to game
-            return RedirectToAction("Index", "Launch");
+            if (world.is_stable)
+            {
+                ViewBag.Message = ViewBag.Message + "\n" + "STABLE";
+            }
+            if (!world.is_populated)
+            {
+                ViewBag.Message = ViewBag.Message + "\n" + "THE END";
+            }
+
+            return View("Index");
         }
 
         // TODO: #20 base controller
