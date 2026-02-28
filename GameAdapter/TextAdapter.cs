@@ -39,6 +39,17 @@ namespace GameAdapter
 
             return arr;
         }
+
+        public static World GetWorldFromString(string world_repr)
+        {
+            // TODO: #19 implement toggling cells based on received world representation
+            string[] rows = world_repr.Split("\n");
+            int n_rows = rows.Length;
+            int n_columns = rows[0].Length;
+            World ret = new World(n_columns, n_rows);
+            return ret;
+        }
+
         private static string CellRepr(Cell cell)
         {
             string ret = cell.IsAlive() ? "o" : " ";

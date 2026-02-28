@@ -37,9 +37,11 @@ namespace WebApp.Controllers
         {
             World world = new World(width, height);
             string world_text = TextAdapter.GetWorldString(world);
-            // NOTE: #18 quickfix adding newline because otherwise top frame gets shifted by multiple spaces
             ViewBag.Message = $"\n{world_text}";
-            return View("Index");
+
+            // proceed to cell setup
+            HttpContext.Session.SetString("world", world_text);            
+            return RedirectToAction("Index", "Setup");
         }        
     }
 }
