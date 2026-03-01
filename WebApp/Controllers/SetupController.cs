@@ -36,7 +36,8 @@ namespace WebApp.Controllers
             World? world = GetWorld();
             if (world == null) { return RedirectToAction("Index", "Home"); }
 
-            world.ToggleCell(x, y);
+            if (world.IsInGrid(x, y)){ world.ToggleCell(x, y); }
+
             ShowWorld(world);
             return View("Index");
         }

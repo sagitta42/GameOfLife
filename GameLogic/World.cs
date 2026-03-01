@@ -65,7 +65,7 @@ namespace GameLogic
             }
         }
 
-        private bool IsInGrid(int i, int j)
+        public bool IsInGrid(int i, int j)
         {
             bool ret = i >= 0 && i < length && j >= 0 && j < height;
             return ret;
@@ -76,7 +76,7 @@ namespace GameLogic
             return IsInGrid(coord.Item1, coord.Item2);
         }
 
-        public Cell GetCell(int i, int j)
+        public Cell? GetCell(int i, int j)
         {
             return IsInGrid(i, j) ? grid[i, j] : null;
         }
