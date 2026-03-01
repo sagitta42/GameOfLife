@@ -19,12 +19,25 @@
         <div class="mt-3">
             <button type="submit" class="btn btn-primary btn-lg">Run</button>
         </div>
-    </form>    
+    </form>
+
+    @if (ViewBag.alert == "outOfGrid")
+    {
+        <div class="popup">
+            <span class="popuptext" id="myPopup">Coordinate out of grid!</span>
+        </div>
+        @* TODO: improve (takes space and changes for each toggle) *@
+        <script>
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+            setTimeout(function() {popup.classList.toggle("show");}, 2000);
+        </script>
+    }     
 
     @if (ViewBag.Message != null)
     {
-            <div class="mt-3 game-console-output" style="white-space: pre;">
+        <div class="mt-3 game-console-output" style="white-space: pre;">
             @ViewBag.Message
-            </div>
+        </div>
     }    
 </div>

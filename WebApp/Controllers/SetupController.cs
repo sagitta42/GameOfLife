@@ -37,6 +37,7 @@ namespace WebApp.Controllers
             if (world == null) { return RedirectToAction("Index", "Home"); }
 
             if (world.IsInGrid(x, y)){ world.ToggleCell(x, y); }
+            else { ViewBag.alert = "outOfGrid"; }
 
             ShowWorld(world);
             return View("Index");

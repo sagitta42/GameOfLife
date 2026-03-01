@@ -34,8 +34,6 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult RunCycle()
         {
-            // TODO: #20 runs single cycle at each click - implement auto-polling
-
             // FIXME: #20 figure out if possible to manage to use Game Flow without needing to replicate steps here
             // (difficulty - ViewBag update each cycle)
             //Run.RunGame(world, _gameInterface);
