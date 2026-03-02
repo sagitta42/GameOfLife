@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{629D58EB-99D3-4760-B232-A5E2DA70A91C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLifeConsole", "ConsoleApp\GameOfLifeConsole.csproj", "{629D58EB-99D3-4760-B232-A5E2DA70A91C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{4EA46AF5-3DA9-4711-BCB8-922F87BF064D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLogic", "GameLogic\GameLogic.csproj", "{4A51536D-91BA-488A-97AF-D32081FD88C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{191C752D-2D5E-430E-94A6-1678BF719569}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife", "WebApp\GameOfLife.csproj", "{191C752D-2D5E-430E-94A6-1678BF719569}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameAdapter", "GameAdapter\GameAdapter.csproj", "{835F1747-AEB1-4B32-B141-7BA5981F7095}"
 EndProject

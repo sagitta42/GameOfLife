@@ -7,10 +7,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-<PropertyGroup>
-	<Version>0.1.0</Version>
-</PropertyGroup>
-
 <ItemGroup>
   <ProjectReference Include="..\GameAdapter\GameAdapter.csproj" />
   <ProjectReference Include="..\GameFlow\GameFlow.csproj" />
