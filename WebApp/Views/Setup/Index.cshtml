@@ -3,9 +3,28 @@
 }
 
 <script>
-    function toggleBox(el) {
+function toggleBox(el) {
     el.classList.toggle("active");
-}
+
+    const value = el.classList.contains("active");
+    fetch('/Setup/ToggleCheckbox', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        @* TODO:  #26 multiple checkboxes *@
+        @* body: JSON.stringify({
+            id: 42,
+            isSelected: value
+        })         *@
+        body: JSON.stringify({ isSelected: value })
+    })
+    .then(response => response.json())
+    .then(data => {
+        @* console.log(data); // debugging         *@
+        document.getElementById("worldDiv").innerText = data.message;
+    });
+}    
 </script>
 
 <div class="text-center">
@@ -28,10 +47,12 @@
     </form>
 </div>
 
-@* TODO: why not centered *@
+@* TODO: #26 why not centered *@
 <div class="text-center mt-3">
     <div class="toggle-box" onclick="toggleBox(this)"></div>
+    <input type="hidden" name="IsSelected" id="IsSelected" value="false" />
 </div>
+<div class="mt-3 game-console-output" style="white-space: pre;" id="worldDiv"></div>    
 
 <div class="text-center mt-3">
     <form method="post" asp-action="RunGame">
@@ -53,10 +74,11 @@
         </script>
     }     
 
+    
     @if (ViewBag.Message != null)
     {
         <div class="mt-3 game-console-output" style="white-space: pre;">
             @ViewBag.Message
         </div>
-    }    
+    }
 </div>

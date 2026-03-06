@@ -44,6 +44,19 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        public ActionResult ToggleCheckbox(bool isSelected)
+        {
+            // TODO: #26 receive ID / coordinates to toggle
+            World? world = GetWorld();
+            if (world == null) { return RedirectToAction("Index", "Home"); }
+            world.ToggleCell(0,0);
+            ShowWorld(world);
+            // returns not View("Index") but JSON for Javascript fetch call
+            JsonResult ret = Json(new {message = ViewBag.Message});
+            return ret;
+        }        
+
+        [HttpPost]
         public IActionResult RunGame()
         {
             // proceed to game
