@@ -2,6 +2,12 @@
     ViewData["Title"] = "Setup";
 }
 
+<script>
+    function toggleBox(el) {
+    el.classList.toggle("active");
+}
+</script>
+
 <div class="text-center">
     <h2>Game rules:</h2>
     Any live cell with fewer than two live neighbours dies, as if by underpopulation <br>
@@ -20,7 +26,14 @@
             <button type="submit" class="btn btn-primary btn-lg">Toggle cell</button>
         </div>
     </form>
+</div>
 
+@* TODO: why not centered *@
+<div class="text-center mt-3">
+    <div class="toggle-box" onclick="toggleBox(this)"></div>
+</div>
+
+<div class="text-center mt-3">
     <form method="post" asp-action="RunGame">
         <div class="mt-3">
             <button type="submit" class="btn btn-primary btn-lg">Run</button>
