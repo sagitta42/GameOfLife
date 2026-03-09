@@ -40,6 +40,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult CreateWorld(int width, int height)
         {
+            // TODO: #26 pass to controller index directly, not through session
             HttpContext.Session.SetInt32("width", width);
             HttpContext.Session.SetInt32("height", height);
 
