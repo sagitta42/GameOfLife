@@ -44,12 +44,15 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult ToggleCheckbox(bool isSelected)
+        public ActionResult ToggleCheckbox(int x, int y)
         {
-            // TODO: #26 receive ID / coordinates to toggle
+            // TODO: #26 unite/replace with ToggleCell (WIP)
             World? world = GetWorld();
             if (world == null) { return RedirectToAction("Index", "Home"); }
-            world.ToggleCell(0,0);
+
+            if (world.IsInGrid(x, y)){ world.ToggleCell(x, y); }
+            else { ViewBag.alert = "outOfGrid"; }
+
             ShowWorld(world);
             // returns not View("Index") but JSON for Javascript fetch call
             JsonResult ret = Json(new {message = ViewBag.Message});

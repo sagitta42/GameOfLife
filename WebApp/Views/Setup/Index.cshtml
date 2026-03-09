@@ -12,12 +12,7 @@ function toggleBox(el) {
         headers: {
             'Content-Type': 'application/json'
         },
-        @* TODO:  #26 multiple checkboxes *@
-        @* body: JSON.stringify({
-            id: 42,
-            isSelected: value
-        })         *@
-        body: JSON.stringify({ isSelected: value })
+        body: JSON.stringify({ x: 0, y: 0 })
     })
     .then(response => response.json())
     .then(data => {
