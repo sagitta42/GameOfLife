@@ -4,6 +4,7 @@ using WebApp.Models;
 
 using GameLogic;
 using GameAdapter;
+using GameOfLife.Models;
 
 namespace WebApp.Controllers
 {
@@ -44,13 +45,15 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult ToggleCheckbox(int x, int y)
+        public ActionResult ToggleCheckbox([FromBody] CellToggle info)
         {
             // TODO: #26 unite/replace with ToggleCell (WIP)
             World? world = GetWorld();
             if (world == null) { return RedirectToAction("Index", "Home"); }
 
-            if (world.IsInGrid(x, y)){ world.ToggleCell(x, y); }
+            int i = info.i;
+            int j = info.j;
+            if (world.IsInGrid(i, j)){ world.ToggleCell(i, j); }
             else { ViewBag.alert = "outOfGrid"; }
 
             ShowWorld(world);

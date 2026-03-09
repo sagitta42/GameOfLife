@@ -62,6 +62,7 @@
 
     let grid = Array.from({length: n_rows}, () => Array(n_cols).fill(false));
 
+    @* TODO: #26 move to site.js *@
     function drawCell(x, y) {
         ctx.fillStyle = grid[y][x] ? "black" : "white";
         ctx.fillRect(x * cell_size, y * cell_size, cell_size, cell_size);
@@ -81,6 +82,19 @@
     function toggleCell(x, y) {
         grid[y][x] = !grid[y][x];
         drawCell(x, y);
+
+        fetch('/Setup/ToggleCheckbox', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ i: x, j: y})
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("worldDiv").innerText = data.message;
+        });        
     }    
 
     canvas.addEventListener("click", function (event) {
