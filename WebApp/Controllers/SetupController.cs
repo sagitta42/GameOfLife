@@ -19,13 +19,12 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.width = HttpContext.Session.GetInt32("width");
-            ViewBag.height = HttpContext.Session.GetInt32("height");
+            int? width = HttpContext.Session.GetInt32("width");
+            int? height = HttpContext.Session.GetInt32("height");
+            if(width == null || height == null) { return RedirectToAction("Index", "Home"); }
 
-            // TODO: #36 get rid of / phase out with grid - store W/H in session, store live cells
-            World? world = GetWorld();
-            if(world == null) { return RedirectToAction("Index", "Home"); }
-            ShowWorld(world);
+            ViewBag.width = width;
+            ViewBag.height = height;
             return View();
         }
 
@@ -36,44 +35,31 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult ToggleCell([FromBody] CellToggle info)
+        public IActionResult SaveSetup([FromBody] Grid grid)
         {
-            World? world = GetWorld();
-            if (world == null) { return RedirectToAction("Index", "Home"); }
+            int? width = HttpContext.Session.GetInt32("width");
+            int? height = HttpContext.Session.GetInt32("height");            
+            if(width == null || height == null) { return RedirectToAction("Index", "Home"); }
+            World world = new World((int) width, (int)height);
 
-            int i = info.i;
-            int j = info.j;
-            if (world.IsInGrid(i, j)){ world.ToggleCell(i, j); }
-            else { ViewBag.alert = "outOfGrid"; }
+            for (int i = 0; i < grid.GetLength(); i++)
+            {
+                for (int j = 0; j < grid.GetHeight(); j++)
+                {
+                    if (grid.IsAlive(i, j)) { world.ToggleCell(i, j); }
+                }
+            }
 
-            ShowWorld(world);
-            // returns not View("Index") but JSON for Javascript fetch call
-            JsonResult ret = Json(new {message = ViewBag.Message});
-            return ret;
-        }        
+            // TODO: #26 pass/set grid directly to Launch; or better - stay and run in this view
+            string world_text = TextAdapter.GetWorldString(world);
+            HttpContext.Session.SetString("world", world_text);
+            return Json(new {});
+        }
 
         [HttpPost]
         public IActionResult RunGame()
         {
-            // proceed to game
             return RedirectToAction("Index", "Launch");
-        }
-
-        // TODO: #20 base controller
-        private void ShowWorld(World world)
-        {
-            string world_text = TextAdapter.GetWorldString(world);
-            HttpContext.Session.SetString("world", world_text);
-            ViewBag.Message = $"\n{world_text}";
-        }
-
-        private World? GetWorld()
-        {
-            string? world_repr = HttpContext.Session.GetString("world");
-            if (world_repr == null) return null;
-
-            World world = TextAdapter.GetWorldFromString(world_repr);
-            return world;
         }
     }
 }
