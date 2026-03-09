@@ -19,6 +19,10 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.width = HttpContext.Session.GetInt32("width");
+            ViewBag.height = HttpContext.Session.GetInt32("height");
+
+            // TODO: #36 get rid of / phase out with grid - store W/H in session, store live cells
             World? world = GetWorld();
             if(world == null) { return RedirectToAction("Index", "Home"); }
             ShowWorld(world);

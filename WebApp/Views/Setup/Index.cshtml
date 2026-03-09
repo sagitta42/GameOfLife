@@ -8,6 +8,8 @@
     Any live cell with two or three live neighbours lives on to the next generation <br>
     Any live cell with more than three live neighbours dies, as if by overpopulation <br>
     Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction <br>
+
+    <h2>Click the grid to toggle cells:</h2>
 </div>
 
 <div class="text-center mt-3">
@@ -15,9 +17,10 @@
 </div>
 
 <script>
-    const n_rows = 5;
-    const n_cols = 5;
     const cell_size = 15;
+
+    const n_rows = @ViewBag.height;
+    const n_cols = @ViewBag.width;
 
     const canvas = document.getElementById("gridCanvas");
     canvas.width = n_cols * cell_size;

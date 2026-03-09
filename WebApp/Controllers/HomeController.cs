@@ -40,9 +40,12 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult CreateWorld(int width, int height)
         {
+            HttpContext.Session.SetInt32("width", width);
+            HttpContext.Session.SetInt32("height", height);
+
+            // TODO: #26 get rid of this - get world from W/H + later stored live cells
             World world = new World(width, height);
             string world_text = TextAdapter.GetWorldString(world);
-            ViewBag.Message = $"\n{world_text}";
 
             // proceed to cell setup
             HttpContext.Session.SetString("world", world_text);            
