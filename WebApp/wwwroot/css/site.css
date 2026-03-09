@@ -99,15 +99,3 @@ body {
   from {opacity: 0;}
   to {opacity:1 ;}
 }
-
-.toggle-box {
-    width: 30px;
-    height: 30px;
-    border: 2px solid black;
-    background-color: white;
-    cursor: pointer;
-}
-
-.toggle-box.active {
-    background-color: black;
-}

@@ -32,22 +32,8 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult ToggleCell(int x, int y)
+        public ActionResult ToggleCell([FromBody] CellToggle info)
         {
-            World? world = GetWorld();
-            if (world == null) { return RedirectToAction("Index", "Home"); }
-
-            if (world.IsInGrid(x, y)){ world.ToggleCell(x, y); }
-            else { ViewBag.alert = "outOfGrid"; }
-
-            ShowWorld(world);
-            return View("Index");
-        }
-
-        [HttpPost]
-        public ActionResult ToggleCheckbox([FromBody] CellToggle info)
-        {
-            // TODO: #26 unite/replace with ToggleCell (WIP)
             World? world = GetWorld();
             if (world == null) { return RedirectToAction("Index", "Home"); }
 
