@@ -42,24 +42,22 @@ namespace WebApp.Controllers
             //Run.RunGame(world, _gameInterface);
 
             World world = GetWorldFromGrid(grid);
-
             world.Cycle();
+            // TODO: #26 more efficient to only send coords of cells that changed status
+            CycleUpdate response = new CycleUpdate {grid = GetGridFromWorld(world).grid, message = "", game_status = "run" };
 
-            // FIXME: #26 this does not work (not returning View)
-            // -> send as part of response (make Model)
             if (world.is_stable)
             {
-                ViewBag.Message = "STABLE";
-                ViewBag.Status = "end";
+                response.message = "STABLE";
+                response.game_status = "end";
             }
             if (!world.is_populated)
             {
-                ViewBag.Message = "THE END";
-                ViewBag.Status = "end";
+                response.message = "THE END";
+                response.game_status = "end";
             }
 
-            // TODO: #26 more efficient to only send coords of cells that changed status
-            return Json(new {grid = GetGridFromWorld(world).grid});
+            return Json(response);
         }
 
         private World GetWorldFromGrid(Grid grid)

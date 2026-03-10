@@ -30,6 +30,8 @@
     const ctx = canvas.getContext("2d");
 
     let grid = Array.from({length: n_rows}, () => Array(n_cols).fill(false));
+    var game_status = "setup";
+    var message = "";
 
     @* TODO: #26 move to site.js *@
     function drawCell(x, y) {
@@ -78,11 +80,13 @@
         const data = await response.json();
         grid = data.grid;
         drawGrid();
+        game_status = data.game_status;
+        message = data.message;
     }
 
     async function runGame(){
         console.log("runGame");
-        @ViewBag.Status = "run";
+        game_status = "run";
         await runCycle();
     }
 </script>
