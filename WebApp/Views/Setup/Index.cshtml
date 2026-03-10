@@ -66,29 +66,24 @@
 
     drawGrid();
 
-    function runCycle(){
-        console.log("runCycle");
-        console.log(grid);
-        fetch('/Setup/RunCycle', {
+    async function runCycle(){
+        const response = await fetch('/Setup/RunCycle', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ grid: grid })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.grid);
-            grid = data.grid;
-            drawGrid();
         });
+        const data = await response.json();
+        grid = data.grid;
+        drawGrid();
     }
 
-    function runGame(){
+    async function runGame(){
         console.log("runGame");
         @ViewBag.Status = "run";
-        runCycle();
+        await runCycle();
     }
 </script>
 

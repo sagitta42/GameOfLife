@@ -45,6 +45,8 @@ namespace WebApp.Controllers
 
             world.Cycle();
 
+            // FIXME: #26 this does not work (not returning View)
+            // -> send as part of response (make Model)
             if (world.is_stable)
             {
                 ViewBag.Message = "STABLE";
