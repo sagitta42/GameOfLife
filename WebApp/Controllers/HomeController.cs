@@ -40,13 +40,11 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult CreateWorld(int width, int height)
         {
-            World world = new World(width, height);
-            string world_text = TextAdapter.GetWorldString(world);
-            ViewBag.Message = $"\n{world_text}";
+            // TODO: #26 pass to controller index directly, not through session
+            HttpContext.Session.SetInt32("width", width);
+            HttpContext.Session.SetInt32("height", height);
 
-            // proceed to cell setup
-            HttpContext.Session.SetString("world", world_text);            
-            return RedirectToAction("Index", "Setup");
+            return RedirectToAction("Index", "Game");
         }        
     }
 }

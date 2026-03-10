@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Game";
+}
+
+<div class="text-center">
+    <h2>Game rules</h2>
+    Any live cell with fewer than two live neighbours dies, as if by underpopulation <br>
+    Any live cell with two or three live neighbours lives on to the next generation <br>
+    Any live cell with more than three live neighbours dies, as if by overpopulation <br>
+    Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction <br>
+
+    <h2>Click the grid to toggle cells</h2>
+</div>
+
+<div class="text-center mt-3">
+    <canvas id="gridCanvas" style="border:1px solid #000000;"></canvas>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+    const cell_size = 15;
+
+    const n_rows = @ViewBag.height;
+    const n_cols = @ViewBag.width;
+
+    const canvas = document.getElementById("gridCanvas");
+    canvas.width = n_cols * cell_size;
+    canvas.height = n_rows * cell_size;
+
+    const ctx = canvas.getContext("2d");
+
+    let grid = Array.from({length: n_rows}, () => Array(n_cols).fill(false));
+    var game_status = "setup";
+    var message = "";
+
+    @* TODO: #26 move to site.js *@
+    function drawCell(x, y) {
+        ctx.fillStyle = grid[y][x] ? "black" : "white";
+        ctx.fillRect(x * cell_size, y * cell_size, cell_size, cell_size);
+
+        ctx.strokeStyle = "gray";
+        ctx.strokeRect(x * cell_size, y * cell_size, cell_size, cell_size);
+    }
+
+    function drawGrid() {
+        for (let y = 0; y < n_rows; y++) {
+            for (let x = 0; x < n_cols; x++) {
+                drawCell(x, y);
+            }
+        }
+    }
+
+    function toggleCell(x, y) {
+        grid[y][x] = !grid[y][x];
+        drawCell(x, y);     
+    }    
+
+    canvas.addEventListener("click", function (event) {
+        const rect = canvas.getBoundingClientRect();
+
+        const x_mouse = event.clientX - rect.left;
+        const y_mouse = event.clientY - rect.top;
+        const x = Math.floor(x_mouse / cell_size);
+        const y = Math.floor(y_mouse / cell_size);
+
+        toggleCell(x, y);
+    });    
+
+    drawGrid();
+
+    async function runCycle(){
+        const response = await fetch('/Game/RunCycle', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ grid: grid })
+        });
+        const data = await response.json();
+        grid = data.grid;
+        drawGrid();
+        game_status = data.game_status;
+        message = data.message;
+    }
+
+    function delay(ms) {
+        return new Promise(r => setTimeout(r, ms));
+    }
+
+    async function runGame(){
+        console.log("runGame");
+        game_status = "run";
+        while(game_status == "run"){
+            await runCycle();
+            await delay(1000);
+        }
+        document.getElementById("endDiv").innerText = message;        
+    }
+</script>
+
+<div class="text-center mt-3">
+    <div class="mt-3">
+        <button onclick="runGame()" class="btn btn-primary btn-lg">Run</button>
+    </div>
+</div>
+
+
+<div class="text-center mt-3">
+    <div id="endDiv"></div>
+</div>
