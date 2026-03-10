@@ -44,7 +44,7 @@ namespace WebApp.Controllers
             HttpContext.Session.SetInt32("width", width);
             HttpContext.Session.SetInt32("height", height);
 
-            return RedirectToAction("Index", "Setup");
+            return RedirectToAction("Index", "Game");
         }        
     }
 }

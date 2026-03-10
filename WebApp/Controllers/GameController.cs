@@ -8,11 +8,11 @@ using GameOfLife.Models;
 
 namespace WebApp.Controllers
 {
-    public class SetupController : Controller
+    public class GameController : Controller
     {
-        private readonly ILogger<SetupController> _logger;
+        private readonly ILogger<GameController> _logger;
 
-        public SetupController(ILogger<SetupController> logger)
+        public GameController(ILogger<GameController> logger)
         {
             _logger = logger;
         }
