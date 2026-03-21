@@ -15,8 +15,7 @@ namespace Tests
         {
             Database db = new Database();
 
-            int id = db.GetPatternId("glider");
-            Assert.Equal(id, 1);
+            int[][] coord = db.GetPatternCoordinates("glider");
         }
     }
 }

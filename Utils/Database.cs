@@ -8,7 +8,7 @@ using Microsoft.Data.SqlClient;
 
 namespace Utils
 {
-    public class Database
+    public class Database : IDisposable
     {
         string name = "game_of_life";
         SqlConnection conn;
@@ -20,12 +20,41 @@ namespace Utils
             conn.Open();
         }
 
+        ~Database() {conn.Close();}
 
-        public int GetPatternId(string name)
+        public void Dispose() { conn.Close(); }
+
+        public int[][] GetPatternCoordinates(string pattern)
+        {
+            int id = GetPatternIdFromName(pattern);
+            int[][] ret = GetPatternCoordinatesFromId(id);
+            return ret;
+        }
+
+        private int[][] GetPatternCoordinatesFromId(int id)
+        {
+            string query = $"select x,y from dbo.pattern_coordinates where dbo.pattern_coordinates.id = {id}";
+            using SqlDataReader reader = GetReader(query);
+
+            List<int> x = new List<int>();
+            List<int> y = new List<int>();
+            while (reader.Read())
+            {
+                x.Add((int)reader["x"]);
+                y.Add((int)reader["y"]);
+            }
+
+            int[][] ret;
+            ret = new int[2][];
+            ret[0] = x.ToArray();
+            ret[1] = y.ToArray();
+            return ret;
+        }
+
+        private int GetPatternIdFromName(string name)
         {
             string query = $"select id from dbo.pattern_templates where dbo.pattern_templates.name = '{name}'";
-            var command = new SqlCommand(query, conn);
-            var reader = command.ExecuteReader();
+            using SqlDataReader reader = GetReader(query);
 
             // TODO: pattern name not found
             int id = 0;
@@ -34,6 +63,13 @@ namespace Utils
                 id = (int)reader["id"];
             }
             return id;
+        }
+
+        private SqlDataReader GetReader(string query)
+        {
+            SqlCommand command = new SqlCommand(query, conn);
+            SqlDataReader reader = command.ExecuteReader();
+            return reader;
         }
     }
 }

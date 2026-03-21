@@ -5,6 +5,7 @@ using WebApp.Models;
 using GameLogic;
 using GameAdapter;
 using GameOfLife.Models;
+using Utils;
 
 namespace WebApp.Controllers
 {
@@ -63,8 +64,9 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult GetPattern([FromBody] PatternTemplate pattern)
         {
-            //PatternTemplate response = new PatternTemplate { id = 1 };
-            CellToggle response = new CellToggle { x = [0, 1, 2, 2, 2], y = [1, 2, 0, 1, 2] };
+            using Database db = new Database();
+            int[][] coord = db.GetPatternCoordinates(pattern.name);
+            CellToggle response = new CellToggle { x = coord[0], y = coord[1] };
             return Json(response);
         }
 
