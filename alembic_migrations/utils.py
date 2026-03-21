@@ -5,7 +5,7 @@ from alembic import op
 from pydantic import BaseModel
 import sqlalchemy as sa
 
-from alembic_migrations.models import DataModel
+from alembic_migrations.models import Coordinates, DataModel, Pattern
 
 
 class SaColumnType(enum.Enum):
@@ -102,11 +102,23 @@ def read_table(table_name: str) -> sa.Table:
     return ret
 
 
-def add_row(table_name, row: DataModel):
+def add_row(table_name: str, row: DataModel):
     table = read_table(table_name)
     op.execute(table.insert().values(row.model_dump()))
 
 
-def delete_row_by_id(table_name, row: DataModel):
+def delete_row_by_id(table_name: str, row: DataModel):
     table = read_table(table_name)
     op.execute(table.delete().where(table.c.id == row.id))
+
+
+def add_pattern(pattern: Pattern, coordinates: list[tuple[int, int]]):
+    add_row("pattern_templates", pattern)
+    for xy in coordinates:
+        coord = Coordinates(id=pattern.id, x=xy[0], y=xy[1])
+        add_row("pattern_coordinates", coord)
+
+
+def remove_pattern(pattern: Pattern):
+    for table_name in ["pattern_coordinates", "pattern_templates"]:
+        delete_row_by_id(table_name, pattern)
