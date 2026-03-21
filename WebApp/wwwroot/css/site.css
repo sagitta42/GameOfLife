@@ -45,7 +45,7 @@ body {
 
 /* Popup container - can be anything you want */
 .popup {
-  position: relative;
+  position: absolute;
   display: inline-block;
   cursor: pointer;
   -webkit-user-select: none;
@@ -67,7 +67,7 @@ body {
   z-index: 1;
   bottom: 125%;
   left: 50%;
-  margin-left: -80px;
+  transform: translate(-50%, -50%)
 }
 
 /* Popup arrow */
