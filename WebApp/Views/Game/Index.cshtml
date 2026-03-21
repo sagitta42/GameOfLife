@@ -34,6 +34,7 @@
     var message = "";
 
     var add_pattern_on_click = false;
+    var add_pattern_clicked_first_time = true;
 
     @* TODO: #26 move to site.js *@
     function drawCell(x, y) {
@@ -128,14 +129,25 @@
 <script>
     function setPatternClick(){
         add_pattern_on_click = true;
+        if(add_pattern_clicked_first_time){
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+            setTimeout(function() {popup.classList.toggle("show");}, 2200);
+            add_pattern_clicked_first_time = false;
+        }    
     }
 </script>
 
-<div class="text-center mt-3">
-    <div class="mt-3">
+<div class="text-center mt-3">  
+    <div class="text-center mt-3">
+        @* TODO: #9 improve popup position *@
+        <div class="popup">
+            <span class="popuptext" id="myPopup">Click grid to add in that location</span>
+        </div>          
         <button onclick="setPatternClick()" class="btn btn-primary btn-lg">Add glider</button>
     </div>
 </div>
+
 
 <div class="text-center mt-3">
     <div class="mt-3">
