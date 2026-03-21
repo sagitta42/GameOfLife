@@ -18,10 +18,29 @@ class Column(BaseModel):
     type: ColumnType
     primary_key: bool = False
     nullable: bool = False
+    foreign_key: str | None = None
 
     @property
     def sa_type(self) -> sa.types.TypeEngine:
         return SaColumnType[self.type].value()
+
+    def get_sa_column(self) -> sa.Column:
+        foreign_key_args = []
+        if self.foreign_key is not None:
+            foreign_key = sa.ForeignKey(
+                name=f"fk_{self.foreign_key.replace('.','_')}",
+                column=self.foreign_key,
+            )
+            foreign_key_args = [foreign_key]
+
+        return sa.Column(
+            self.name,
+            self.sa_type,
+            nullable=self.nullable,
+            primary_key=self.primary_key,
+            *foreign_key_args,
+        )
+
 
 class Table(BaseModel):
     name: str
@@ -42,9 +61,6 @@ def add_column_descriptions(table: Table):
 def create_table(table: Table):
     op.create_table(
         table.name,
-        *(
-            sa.Column(c.name, c.sa_type, nullable=c.nullable, primary_key=c.primary_key)
-            for c in table.columns
-        ),
+        *(c.get_sa_column() for c in table.columns),
     )
     add_column_descriptions(table)
