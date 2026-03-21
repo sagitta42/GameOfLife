@@ -22,10 +22,10 @@ depends_on: Union[str, Sequence[str], None] = None
 table_patterns = utils.Table(
     name="pattern_templates",
     columns=[
-        utils.Column(name="id", description="ID", type="int", primary_key=True),
-        utils.Column(name="name", description="Pattern name", type="str"),
-        utils.Column(name="type", description="Pattern type", type="str"),
-    ]
+        utils.Column(name="id", description="ID", type=int, primary_key=True),
+        utils.Column(name="name", description="Pattern name", type=str),
+        utils.Column(name="type", description="Pattern type", type=str),
+    ],
 )
 
 

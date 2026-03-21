@@ -4,25 +4,27 @@ from alembic import op
 from pydantic import BaseModel
 import sqlalchemy as sa
 
-class ColumnType(str, enum.Enum):
-    int = "int"
-    str = "str"
 
 class SaColumnType(enum.Enum):
     int = sa.Integer
     str = sa.String
 
+    @classmethod
+    def from_type(cls, t: type) -> SaColumnType:
+        return cls[t.__name__]
+
+
 class Column(BaseModel):
     name: str
     description: str
-    type: ColumnType
+    type: type
     primary_key: bool = False
     nullable: bool = False
     foreign_key: str | None = None
 
     @property
     def sa_type(self) -> sa.types.TypeEngine:
-        return SaColumnType[self.type].value()
+        return SaColumnType.from_type(self.type).value()
 
     def get_sa_column(self) -> sa.Column:
         foreign_key_args = []

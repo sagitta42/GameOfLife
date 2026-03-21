@@ -21,11 +21,16 @@ depends_on: Union[str, Sequence[str], None] = None
 
 table_coordinates = utils.Table(
     name="pattern_coordinates",
-    columns = [
-        utils.Column(name="id", description="Pattern ID", type="int", foreign_key="pattern_templates.id"),
-        utils.Column(name="x", description="X coordinate of a live cell", type="int"),
-        utils.Column(name="y", description="Y coordinate of a live cell", type="int"),
-    ]
+    columns=[
+        utils.Column(
+            name="id",
+            description="Pattern ID",
+            type=int,
+            foreign_key="pattern_templates.id",
+        ),
+        utils.Column(name="x", description="X coordinate of a live cell", type=int),
+        utils.Column(name="y", description="Y coordinate of a live cell", type=int),
+    ],
 )
 
 def upgrade() -> None:
