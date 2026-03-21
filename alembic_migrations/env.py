@@ -75,6 +75,8 @@ def run_migrations_online() -> None:
         url=url,
     )
 
+    # TODO: investigate warning:
+    # SAWarning: Unrecognized server version info '17.0.1000.7'.  Some SQL Server features may not function properly.
     with connectable.connect() as connection:
         context.configure(
             connection=connection, target_metadata=target_metadata

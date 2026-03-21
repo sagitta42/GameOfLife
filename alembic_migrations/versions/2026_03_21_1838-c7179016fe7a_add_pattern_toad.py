@@ -1,8 +1,8 @@
-"""add pattern glider
+"""add pattern toad
 
-Revision ID: 1bf804167a7e
-Revises: 821629c0a870
-Create Date: 2026-03-21 13:47:27.280644
+Revision ID: c7179016fe7a
+Revises: 1bf804167a7e
+Create Date: 2026-03-21 18:38:44.569296
 
 """
 from typing import Sequence, Union
@@ -14,13 +14,13 @@ from alembic_migrations import models, utils
 
 
 # revision identifiers, used by Alembic.
-revision: str = '1bf804167a7e'
-down_revision: Union[str, Sequence[str], None] = '821629c0a870'
+revision: str = 'c7179016fe7a'
+down_revision: Union[str, Sequence[str], None] = '1bf804167a7e'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
-pattern = models.Pattern(id=1, name="glider", type="spaceship")
-coordinates = [(0, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+pattern = models.Pattern(id=2, name="toad", type="stillife")
+coordinates = [(0,1), (0,2), (1,3), (2,0), (3,1), (3,2)]
 
 def upgrade() -> None:
     """Upgrade schema."""
