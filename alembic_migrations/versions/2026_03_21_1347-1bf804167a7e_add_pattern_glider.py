@@ -32,5 +32,5 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     """Downgrade schema."""
-    for table_name in ["pattern_templates", "pattern_coordinates"]:
+    for table_name in ["pattern_coordinates", "pattern_templates"]:
         utils.delete_row_by_id(table_name, pattern)
