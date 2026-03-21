@@ -10,7 +10,7 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
-from alembic_migrations import utils
+from alembic_migrations import models, utils
 
 
 # revision identifiers, used by Alembic.
@@ -19,14 +19,8 @@ down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
-table_patterns = utils.Table(
-    name="pattern_templates",
-    columns=[
-        utils.Column(name="id", description="ID", type=int, primary_key=True),
-        utils.Column(name="name", description="Pattern name", type=str),
-        utils.Column(name="type", description="Pattern type", type=str),
-    ],
-)
+columns = utils.make_table_columns(models.Pattern, primary_keys=["id"])
+table_patterns = utils.Table(name="pattern_templates", columns=columns)
 
 
 def upgrade() -> None:

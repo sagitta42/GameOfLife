@@ -10,7 +10,7 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
-from alembic_migrations import utils
+from alembic_migrations import models, utils
 
 
 # revision identifiers, used by Alembic.
@@ -19,19 +19,10 @@ down_revision: Union[str, Sequence[str], None] = '74d9f1e6e64f'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
-table_coordinates = utils.Table(
-    name="pattern_coordinates",
-    columns=[
-        utils.Column(
-            name="id",
-            description="Pattern ID",
-            type=int,
-            foreign_key="pattern_templates.id",
-        ),
-        utils.Column(name="x", description="X coordinate of a live cell", type=int),
-        utils.Column(name="y", description="Y coordinate of a live cell", type=int),
-    ],
+columns = utils.make_table_columns(
+    models.Coordinates, foreign_keys={"id": "pattern_templates.id"}
 )
+table_coordinates = utils.Table(name="pattern_coordinates", columns=columns)
 
 def upgrade() -> None:
     """Upgrade schema."""

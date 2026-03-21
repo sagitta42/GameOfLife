@@ -1,8 +1,11 @@
 import enum
+from typing import Type
 
 from alembic import op
 from pydantic import BaseModel
 import sqlalchemy as sa
+
+from alembic_migrations.models import DataModel
 
 
 class SaColumnType(enum.Enum):
@@ -47,6 +50,30 @@ class Column(BaseModel):
 class Table(BaseModel):
     name: str
     columns: list[Column]
+
+
+def get_model_columns(model: Type[DataModel]) -> list[Column]:
+    ret = []
+    for name, info in model.model_fields.items():
+        col = Column(name=name, description=info.description, type=info.annotation)
+        ret.append(col)
+    return ret
+
+
+def make_table_columns(
+    model: Type[DataModel],
+    primary_keys: list[str] = [],
+    foreign_keys: dict[str, str] = {},
+) -> list[Column]:
+    # TODO: validation (columns in primary/foreign keys do not exist)
+    cols = get_model_columns(model)
+    for col in cols:
+        if col.name in primary_keys:
+            col.primary_key = True
+        if col.name in foreign_keys:
+            col.foreign_key = foreign_keys[col.name]
+    return cols
+
 
 def add_column_descriptions(table: Table):
     for column in table.columns:
