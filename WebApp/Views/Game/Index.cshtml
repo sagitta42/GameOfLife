@@ -35,6 +35,7 @@
 
     var add_pattern_on_click = false;
     var add_pattern_clicked_first_time = true;
+    var pattern_name = "";
 
     @* TODO: #26 move to site.js *@
     function drawCell(x, y) {
@@ -58,7 +59,7 @@
         drawCell(x, y);     
     }    
 
-    async function addGlider(x, y){
+    async function addPattern(name, x, y){
         // TODO: can call another Controller? (could be useful for ConfigurationController)
         // TODO: fetch pattern already at button click, toggle cell here to save time
         const response = await fetch('/Game/GetPattern', {
@@ -67,7 +68,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name: "glider" })
+            body: JSON.stringify({ name: name })
         });
         const data = await response.json();
 
@@ -85,8 +86,9 @@
         const y = Math.floor(y_mouse / cell_size);
 
         if(add_pattern_on_click){
-            addGlider(x, y);
+            addPattern(pattern_name, x, y);
             add_pattern_on_click = false;
+            pattern_name = "";
         }
         else{
             toggleCell(x, y);
@@ -127,8 +129,9 @@
 </script>
 
 <script>
-    function setPatternClick(){
+    function setPattern(name){
         add_pattern_on_click = true;
+        pattern_name = name;
         if(add_pattern_clicked_first_time){
             var popup = document.getElementById("myPopup");
             popup.classList.toggle("show");
@@ -144,7 +147,8 @@
         <div class="popup">
             <span class="popuptext" id="myPopup">Click grid to add in that location</span>
         </div>          
-        <button onclick="setPatternClick()" class="btn btn-primary btn-lg">Add glider</button>
+        <button onclick="setPattern('glider')" class="btn btn-primary btn-lg">Add glider</button>
+        <button onclick="setPattern('toad')" class="btn btn-primary btn-lg">Add toad</button>
     </div>
 </div>
 
