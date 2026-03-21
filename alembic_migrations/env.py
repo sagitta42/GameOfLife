@@ -1,6 +1,6 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
+from sqlalchemy import URL, engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
@@ -26,6 +26,16 @@ target_metadata = None
 # ... etc.
 
 
+url = URL.create(
+    "mssql+pyodbc",
+    host="localhost",
+    database="master",
+    query={
+        "driver": "ODBC Driver 17 for SQL Server",
+        "trusted_connection": "yes",
+    },
+)
+
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
@@ -38,7 +48,6 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -61,6 +70,7 @@ def run_migrations_online() -> None:
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
+        url=url,
     )
 
     with connectable.connect() as connection:
