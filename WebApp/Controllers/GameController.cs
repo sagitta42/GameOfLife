@@ -60,6 +60,14 @@ namespace WebApp.Controllers
             return Json(response);
         }
 
+        [HttpPost]
+        public IActionResult GetPattern([FromBody] PatternTemplate pattern)
+        {
+            //PatternTemplate response = new PatternTemplate { id = 1 };
+            CellToggle response = new CellToggle { i = 0, j = 0 };
+            return Json(response);
+        }
+
         private World GetWorldFromGrid(Grid grid)
         {
             int width = grid.GetLength();

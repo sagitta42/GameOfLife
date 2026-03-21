@@ -9,7 +9,7 @@
     Any live cell with more than three live neighbours dies, as if by overpopulation <br>
     Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction <br>
 
-    <h2>Click the grid to toggle cells</h2>
+    <h3>Click the grid to toggle cells</h3>
 </div>
 
 <div class="text-center mt-3">
@@ -98,6 +98,30 @@
         document.getElementById("endDiv").innerText = message;        
     }
 </script>
+
+<script>
+    async function addGlider(){
+        // TODO: can call another Controller?
+        const response = await fetch('/Game/GetPattern', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: "glider" })
+        });
+        const data = await response.json();
+        console.log(data.i)
+        console.log(data.j)
+        toggleCell(data.i, data.j);
+    }
+</script>
+
+<div class="text-center mt-3">
+    <div class="mt-3">
+        <button onclick="addGlider()" class="btn btn-primary btn-lg">Add glider</button>
+    </div>
+</div>
 
 <div class="text-center mt-3">
     <div class="mt-3">
