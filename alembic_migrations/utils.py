@@ -75,6 +75,7 @@ def make_table_columns(
     return cols
 
 
+# TODO: seems to be not working
 def add_column_descriptions(table: Table):
     for column in table.columns:
         op.execute(f"""
@@ -93,3 +94,19 @@ def create_table(table: Table):
         *(c.get_sa_column() for c in table.columns),
     )
     add_column_descriptions(table)
+
+
+def read_table(table_name: str) -> sa.Table:
+    metadata = sa.MetaData()
+    ret = sa.Table(table_name, metadata, autoload_with=op.get_bind())
+    return ret
+
+
+def add_row(table_name, row: DataModel):
+    table = read_table(table_name)
+    op.execute(table.insert().values(row.model_dump()))
+
+
+def delete_row_by_id(table_name, row: DataModel):
+    table = read_table(table_name)
+    op.execute(table.delete().where(table.c.id == row.id))

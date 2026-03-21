@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 
 class DataModel(BaseModel):
-    pass
+    id: int = Field(description="ID")
 
 class Pattern(DataModel):
     id: int = Field(description="ID")
