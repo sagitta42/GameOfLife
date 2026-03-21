@@ -111,9 +111,10 @@
             body: JSON.stringify({ name: "glider" })
         });
         const data = await response.json();
-        console.log(data.i)
-        console.log(data.j)
-        toggleCell(data.i, data.j);
+
+        for (let i = 0; i < data.x.length; i++) {
+            toggleCell(data.x[i], data.y[i]);
+        }
     }
 </script>
 

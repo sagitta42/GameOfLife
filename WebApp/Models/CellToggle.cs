@@ -2,7 +2,7 @@
 {
     public class CellToggle
     {
-        public int i { get; set; }
-        public int j { get; set; }
+        public int[] x { get; set; }
+        public int[] y { get; set; }
     }
 }

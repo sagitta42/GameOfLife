@@ -64,7 +64,7 @@ namespace WebApp.Controllers
         public IActionResult GetPattern([FromBody] PatternTemplate pattern)
         {
             //PatternTemplate response = new PatternTemplate { id = 1 };
-            CellToggle response = new CellToggle { i = 0, j = 0 };
+            CellToggle response = new CellToggle { x = [0, 1, 2, 2, 2], y = [1, 2, 0, 1, 2] };
             return Json(response);
         }
 
