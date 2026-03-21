@@ -1,5 +1,4 @@
 import enum
-from typing import Union
 
 from alembic import op
 from pydantic import BaseModel

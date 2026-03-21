@@ -5,6 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
+DATABASE_NAME = "game_of_life"
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -29,7 +31,7 @@ target_metadata = None
 url = URL.create(
     "mssql+pyodbc",
     host="localhost",
-    database="master",
+    database=DATABASE_NAME,
     query={
         "driver": "ODBC Driver 17 for SQL Server",
         "trusted_connection": "yes",
