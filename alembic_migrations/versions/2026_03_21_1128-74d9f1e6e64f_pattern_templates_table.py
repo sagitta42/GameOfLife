@@ -31,11 +31,7 @@ table_patterns = utils.Table(
 
 def upgrade() -> None:
     """Upgrade schema."""
-    op.create_table(
-        table_patterns.name,
-        *(sa.Column(c.name, c.sa_type, nullable=c.nullable, primary_key=c.primary_key) for c in table_patterns.columns)
-    )
-    utils.add_column_descriptions(table_patterns)
+    utils.create_table(table_patterns)
 
 def downgrade() -> None:
     """Downgrade schema."""

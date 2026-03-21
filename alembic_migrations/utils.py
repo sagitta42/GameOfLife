@@ -37,3 +37,14 @@ def add_column_descriptions(table: Table):
             @level1type = N'TABLE',  @level1name = '{table.name}',
             @level2type = N'COLUMN', @level2name = '{column.name}';
         """)
+
+
+def create_table(table: Table):
+    op.create_table(
+        table.name,
+        *(
+            sa.Column(c.name, c.sa_type, nullable=c.nullable, primary_key=c.primary_key)
+            for c in table.columns
+        ),
+    )
+    add_column_descriptions(table)
