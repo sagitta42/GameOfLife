@@ -426,3 +426,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# alembic
+db/game_of_life.db

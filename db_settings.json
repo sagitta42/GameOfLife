@@ -1,0 +1,4 @@
+{
+    "mode": "sqlite",
+    "db_name": "game_of_life"
+}

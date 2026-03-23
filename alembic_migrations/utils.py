@@ -6,6 +6,7 @@ from pydantic import BaseModel
 import sqlalchemy as sa
 
 from alembic_migrations.models import Coordinates, DataModel, Pattern
+from alembic_migrations.settings import DBMode, db_settings
 
 
 class SaColumnType(enum.Enum):
@@ -93,7 +94,8 @@ def create_table(table: Table):
         table.name,
         *(c.get_sa_column() for c in table.columns),
     )
-    add_column_descriptions(table)
+    if db_settings.mode == DBMode.sqlserver.value:
+        add_column_descriptions(table)
 
 
 def read_table(table_name: str) -> sa.Table:

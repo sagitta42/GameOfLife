@@ -1,13 +1,12 @@
-import enum
-import json
 from logging.config import fileConfig
-from pathlib import Path
 
 from pydantic import BaseModel
 from sqlalchemy import URL, engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+
+from alembic_migrations.settings import DBMode, db_settings, get_config
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -29,33 +28,29 @@ target_metadata = None
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
-
-class DBMode(str, enum.Enum):
-    sqlserver = "sqlserver"
-
-
-class DBConfig(BaseModel):
-    db_mode: str
-    database: str
+class SQLServerConfig(BaseModel):
     username: str
     password: str
     port: int
 
-
 def get_url() -> URL:
-    config_path = Path(__file__).parent.parent / "db_config.json"
-    with open(config_path) as f:
-        config = DBConfig(**json.load(f))
 
-    url = URL.create(
-        "mssql+pyodbc",
-        host="localhost",
-        port=config.port,
-        username=config.username,
-        password=config.password,
-        database=config.database,
-        query={"driver": "ODBC Driver 17 for SQL Server"},
-    )
+    if db_settings.mode == DBMode.sqlserver.value:
+        sqlserver_config = SQLServerConfig(**get_config("sql_server_config.json"))
+
+        url = URL.create(
+            "mssql+pyodbc",
+            host="localhost",
+            port=sqlserver_config.port,
+            username=sqlserver_config.username,
+            password=sqlserver_config.password,
+            database=db_settings.db_name,
+            query={"driver": "ODBC Driver 17 for SQL Server"},
+        )
+    elif db_settings.mode == DBMode.sqlite.value:
+        url = URL.create("sqlite", database=f"db/{db_settings.db_name}.db")
+    else:
+        raise NotImplementedError("DB mode not recognized; use 'sqlserver' or 'sqlite'")
     return url
 
 

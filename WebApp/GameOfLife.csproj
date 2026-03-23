@@ -12,4 +12,10 @@
     <ProjectReference Include="..\Utils\Utils.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\db\game_of_life.db" Link="db\game_of_life.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
