@@ -15,7 +15,7 @@ namespace Utils
 
         public Database()
         {
-            string connectionString = $"Server=localhost;Database={name};Trusted_Connection=true;TrustServerCertificate=true;";
+            string connectionString = $"Server=localhost,1433;Database={name};User Id=sa;Password=g@me0fLife;TrustServerCertificate=true;";
             conn = new SqlConnection(connectionString);
             conn.Open();
         }
