@@ -66,7 +66,7 @@ namespace WebApp.Controllers
         {
             using Database db = new Database();
             int[][] coord = db.GetPatternCoordinates(pattern.name);
-            CellToggle response = new CellToggle { x = coord[0], y = coord[1] };
+            PatternToggle response = new PatternToggle { x = coord[0], y = coord[1] };
             return Json(response);
         }
 
