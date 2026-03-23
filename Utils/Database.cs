@@ -2,20 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using Microsoft.Data.SqlClient;
 
 namespace Utils
 {
+    public class DBConfig
+    {
+        public string database { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public int port { get; set; }
+    }
+
     public class Database : IDisposable
     {
-        string name = "game_of_life";
         SqlConnection conn;
 
         public Database()
         {
-            string connectionString = $"Server=localhost,1433;Database={name};User Id=sa;Password=g@me0fLife;TrustServerCertificate=true;";
+            DBConfig? config = JsonSerializer.Deserialize<DBConfig>(
+                File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "db_config.json"))
+            );
+            if(config == null) {throw new Exception("DB config not found!"); }
+            string connectionString = $"Server=localhost,{config.port};Database={config.database};User Id={config.username};Password={config.password};TrustServerCertificate=true;";
             conn = new SqlConnection(connectionString);
             conn.Open();
         }

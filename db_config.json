@@ -1,0 +1,7 @@
+{
+    "db_mode": "sqlserver",
+    "database": "game_of_life",
+    "username": "sa",
+    "password": "g@me0fLife",
+    "port": 1433
+}

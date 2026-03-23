@@ -1,11 +1,13 @@
+import enum
+import json
 from logging.config import fileConfig
+from pathlib import Path
 
+from pydantic import BaseModel
 from sqlalchemy import URL, engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-
-DATABASE_NAME = "game_of_life"
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -28,15 +30,34 @@ target_metadata = None
 # ... etc.
 
 
-url = URL.create(
-    "mssql+pyodbc",
-    host="localhost",
-    port=1433,
-    username="sa",
-    password="g@me0fLife",
-    database=DATABASE_NAME,
-    query={"driver": "ODBC Driver 17 for SQL Server"},
-)
+class DBMode(str, enum.Enum):
+    sqlserver = "sqlserver"
+
+
+class DBConfig(BaseModel):
+    db_mode: str
+    database: str
+    username: str
+    password: str
+    port: int
+
+
+def get_url() -> URL:
+    config_path = Path(__file__).parent.parent / "db_config.json"
+    with open(config_path) as f:
+        config = DBConfig(**json.load(f))
+
+    url = URL.create(
+        "mssql+pyodbc",
+        host="localhost",
+        port=config.port,
+        username=config.username,
+        password=config.password,
+        database=config.database,
+        query={"driver": "ODBC Driver 17 for SQL Server"},
+    )
+    return url
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -51,7 +72,7 @@ def run_migrations_offline() -> None:
 
     """
     context.configure(
-        url=url,
+        url=get_url(),
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -72,7 +93,7 @@ def run_migrations_online() -> None:
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
-        url=url,
+        url=get_url(),
     )
 
     # TODO: investigate warning:

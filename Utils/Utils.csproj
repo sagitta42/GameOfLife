@@ -14,4 +14,10 @@
 	  <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	<Content Include="..\db_config.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	</ItemGroup>	
+
 </Project>
