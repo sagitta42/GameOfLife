@@ -31,11 +31,11 @@ target_metadata = None
 url = URL.create(
     "mssql+pyodbc",
     host="localhost",
+    port=1433,
+    username="sa",
+    password="g@me0fLife",
     database=DATABASE_NAME,
-    query={
-        "driver": "ODBC Driver 17 for SQL Server",
-        "trusted_connection": "yes",
-    },
+    query={"driver": "ODBC Driver 17 for SQL Server"},
 )
 
 def run_migrations_offline() -> None:
