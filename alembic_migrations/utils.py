@@ -14,7 +14,7 @@ class SaColumnType(enum.Enum):
     str = sa.String
 
     @classmethod
-    def from_type(cls, t: type) -> SaColumnType:
+    def from_type(cls, t: type):
         return cls[t.__name__]
 
 

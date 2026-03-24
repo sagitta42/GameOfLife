@@ -429,3 +429,6 @@ FodyWeavers.xsd
 
 # alembic
 db/game_of_life.db
+
+# python
+venv
