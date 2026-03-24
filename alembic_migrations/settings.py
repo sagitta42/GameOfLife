@@ -15,7 +15,7 @@ class DBSettings(BaseModel):
     db_name: str
 
 def get_config(config_file: str) -> dict:
-    config_path = Path(__file__).parent.parent / config_file
+    config_path = Path(__file__).parent.parent / "db" / config_file
     with open(config_path) as f:
         config = json.load(f)
     return config

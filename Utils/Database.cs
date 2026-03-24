@@ -32,7 +32,7 @@ namespace Utils
         public Database()
         {
             DBSettings? dbSettings = JsonSerializer.Deserialize<DBSettings>(
-                File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "db_settings.json"))
+                File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "db", "db_settings.json"))
             );
             if (dbSettings == null) { throw new Exception("DB mode config not found!"); }
 
@@ -40,7 +40,7 @@ namespace Utils
             if (dbSettings.mode == "sqlserver")
             {
                 SQLServerConfig? configSqlServer = JsonSerializer.Deserialize<SQLServerConfig>(
-                    File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "sql_server_config.json"))
+                    File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "db", "sql_server_config.json"))
                 );
                 if (configSqlServer == null) { throw new Exception("SQL Server config not found!"); }
                 connectionString = $"Server=localhost,{configSqlServer.port};Database={dbSettings.db_name};User Id={configSqlServer.username};Password={configSqlServer.password};TrustServerCertificate=true;";

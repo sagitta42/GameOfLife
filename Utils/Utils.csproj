@@ -16,10 +16,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	<Content Include="..\sql_server_config.json">
+	<Content Include="..\db\sql_server_config.json" Link="db\sql_server_config.json">
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</Content>
-	<Content Include="..\db_settings.json">
+	<Content Include="..\db\db_settings.json" Link="db\db_settings.json">
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</Content>
 	</ItemGroup>	
